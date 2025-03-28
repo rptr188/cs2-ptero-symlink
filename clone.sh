@@ -14,13 +14,16 @@ if [ ! -d "$TARGET_FOLDER" ]; then
   exit 1
 fi
 
-# Create symlinks for .vpk files from the base folder
-find "$BASE_FOLDER" -type f -name "*.vpk" -exec ln -s {} "$TARGET_FOLDER" \;
+# Create the same folder structure as the base folder
+echo "Mirroring folder structure from $BASE_FOLDER to $TARGET_FOLDER..."
+find "$BASE_FOLDER" -type d -exec bash -c 'mkdir -p "$0/${1#$2}"' "$TARGET_FOLDER" "{}" "$BASE_FOLDER" \;
 
-# Copy contents of /game/bin/ to the target folder
-cp -r "$GAME_BIN_FOLDER"/* "$TARGET_FOLDER"
+# Recursively copy files except those with .vpk extension
+echo "Copying files (excluding .vpk) from $BASE_FOLDER to $TARGET_FOLDER..."
+find "$BASE_FOLDER" -type f ! -name "*.vpk" -exec bash -c 'cp "$1" "$0/${1#$2}"' "$TARGET_FOLDER" "{}" "$BASE_FOLDER" \;
 
-# Copy files without .vpk extension from the base folder to the target folder
-find "$BASE_FOLDER" -type f ! -name "*.vpk" -exec cp {} "$TARGET_FOLDER" \;
+# Create symlinks for .vpk files from the base folder to the target folder
+echo "Creating symlinks for .vpk files..."
+find "$BASE_FOLDER" -type f -name "*.vpk" -exec bash -c 'ln -s "$1" "$0/${1#$2}"' "$TARGET_FOLDER" "{}" "$BASE_FOLDER" \;
 
-echo "Clone has been completed"
+echo "Operation completed successfully!"
