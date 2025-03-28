@@ -6,7 +6,6 @@ read -p "Enter base folder: " BASE
 # Define paths
 TARGET_FOLDER="/var/lib/pterodactyl/volumes/$UUID"/
 BASE_FOLDER="$BASE"
-GAME_BIN_FOLDER="/game/bin"
 
 # Check if UUID folder exists
 if [ ! -d "$TARGET_FOLDER" ]; then
