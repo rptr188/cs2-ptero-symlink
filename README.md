@@ -11,3 +11,15 @@ Wings + Pterodactyl combination
 
 1zc-Pterodactyl egg
 
+SKIP INSTALL SCRIPT has to be checked on all servers
+
+
+TODO LIST:
+
+
+Correctly symlink all VPK files
+
+Logic for turning on servers after updating
+
+Discord webhook for sending notifications
+
